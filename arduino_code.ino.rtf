@@ -1,0 +1,47 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2818
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+{\*\expandedcolortbl;;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww11520\viewh8400\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 #include <Servo.h>\
+\
+int clearLed = 10;\
+int brownLed = 12;  // Pin for brown LED\
+int greenLed = 11;  // Pin for green LED\
+Servo myservo;\
+\
+void setup() \{\
+    pinMode(brownLed, OUTPUT);\
+    pinMode(greenLed, OUTPUT);\
+    myservo.attach(3);\
+    Serial.begin(9600);\
+\}\
+\
+void loop() \{\
+    int signal = Serial.read();\
+    if (signal == '1') \{\
+        // Brown bottle detected\
+        myservo.write(180);\
+        digitalWrite(brownLed, HIGH);\
+        delay(1000);\
+        digitalWrite(brownLed, LOW);\
+        myservo.write(0);\
+    \} else if (signal == '2') \{\
+        // Green bottle detected\
+        digitalWrite(greenLed, HIGH);\
+        myservo.write(135);\
+        delay(2000);\
+        digitalWrite(greenLed, LOW);\
+        myservo.write(0);\
+    \} else if (signal == '3') \{\
+        // Clear bottle detected\
+        myservo.write(45);\
+        digitalWrite(clearLed, HIGH);\
+        delay(1000);\
+        digitalWrite(clearLed, LOW);\
+        myservo.write(0);\
+    \}\
+\}\
+}
